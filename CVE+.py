@@ -94,6 +94,8 @@ def get_searchsploit_results():
     for x in range(len(output['RESULTS_EXPLOIT'])): # iterates through results in json
         result_tittle.append(output['RESULTS_EXPLOIT'][x]['Title']) # saves results to lists
         path.append(output['RESULTS_EXPLOIT'][x]['Path']) # saves paths of results to list
+    for i in range(len(result_tittle)):
+        print(result_tittle[i])    
     for i in range(len(output['RESULTS_EXPLOIT'][i]['Codes'])):
         current = str(output['RESULTS_EXPLOIT'][i]['Codes'])
         current_list = current.split(';') # Some results have multiple codes so this splits them
