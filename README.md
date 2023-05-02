@@ -6,4 +6,13 @@ From here it checks the results to find if any have CVE's associated with them.
 You can mirror the wanted CVE from here or you can continue to find out more information from them.
 If you chose to learn more it checks https://github.com/CVEProject/cvelist
 <br>
-from here it finds additional information from the repo about the chosen CVE. This includes references, assigners, state etc..
+from here it finds additional information from the repo about the chosen CVE. This includes references, assigners, state etc.
+
+## Examples
+#### yuh
+![examples1](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture.PNG)
+
+
+![examples2](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture2.PNG)
+
+![examples2](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture3.PNG)
