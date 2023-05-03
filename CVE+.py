@@ -107,7 +107,7 @@ def get_searchsploit_results():
     os.system(clear)
     pr("CVE DETECTED")
     for i in range(len(CVE_results)):
-        print('[', i+1, ']', 'Info: ', CVE_title[i], 'CVE: ', CVE_results[i])
+        print('[', i+1, ']', 'Info: ', CVE_title[i], ' \033[91mCVE\033[00m: ', CVE_results[i])
     choice = input(
         "Enter \033[91mchoice\033[00m or \033[91mm+choice\033[00m  to mirror: ")
     if "m" in choice:
