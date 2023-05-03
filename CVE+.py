@@ -1,9 +1,10 @@
-import git
+#import git
 import os
-import re
+#import re
 import json
 import requests
 from subprocess import Popen, PIPE
+import xmltodict
 
 # Made by Karan Kantaria
 # Too lazy to comment everything sooooo
@@ -94,8 +95,6 @@ def get_searchsploit_results():
     for x in range(len(output['RESULTS_EXPLOIT'])): # iterates through results in json
         result_tittle.append(output['RESULTS_EXPLOIT'][x]['Title']) # saves results to lists
         path.append(output['RESULTS_EXPLOIT'][x]['Path']) # saves paths of results to list
-    for i in range(len(result_tittle)):
-        print(result_tittle[i])    
     for i in range(len(output['RESULTS_EXPLOIT'][i]['Codes'])):
         current = str(output['RESULTS_EXPLOIT'][i]['Codes'])
         current_list = current.split(';') # Some results have multiple codes so this splits them
@@ -107,7 +106,7 @@ def get_searchsploit_results():
     os.system(clear)
     pr("CVE DETECTED")
     for i in range(len(CVE_results)):
-        print('[', i+1, ']', 'Info: ', CVE_title[i], ' \033[91mCVE\033[00m: ', CVE_results[i])
+        print('[', i+1, ']', 'Info: ', CVE_title[i], 'CVE: ', CVE_results[i])
     choice = input(
         "Enter \033[91mchoice\033[00m or \033[91mm+choice\033[00m  to mirror: ")
     if "m" in choice:
@@ -124,7 +123,7 @@ def get_searchsploit_results():
 
 
 def mirror(CVE_path):
-    os.system("clear")
+    os.sytem("clear")
     CVE_path = str(CVE_path)
     cmd = 'searchsploit -m '+CVE_path
     os.system(cmd)
@@ -146,6 +145,55 @@ def banner():
     print(banner)
 
 
+def nmap_scan(ip):
+    ip=str(ip)
+    cmd="nmap -p 1-65535 -T4 -A -v -sV -oX nmap_output.xml "+ip+" 1>/dev/null 2>/dev/null"
+    #stdout = Popen(cmd, shell=True, stdout=PIPE).stdout
+    temp_open = open("Test_fake_nmap.xml")
+    xml_content = temp_open.read()
+    temp_open.close()
+    nmap_JSON=json.dumps(xmltodict.parse(xml_content), indent=4, sort_keys=True)
+    nmap_JSON=json.loads(nmap_JSON)
+    http_status=False
+    cmd_run=nmap_JSON['nmaprun']['@args']
+    ports=nmap_JSON['nmaprun']['host']['ports']['port']
+    open_ports=[]
+    services=[]
+    product=[]
+    Found_CVE=[]
+    for i in range(len(ports)):
+        open_ports.append(ports[i]['@portid'])
+        services.append(ports[i]['service']['@name'])
+        #product.append(ports[i]['service']['@product'])
+    for i in range(len(services)):
+        if "http" in services[i]:
+            http_status=True
+        else:
+            http_status=False
+    for i in range(len(open_ports)):
+        print("Port: ",open_ports[i]," Service: ",services[i])
+    find_CVE=input("Would you like to search for CVE's? [y/n]")
+    if find_CVE.lower()=="y":
+        for i in range(len(services)):
+            if get_searchsploit_results(services[i]):
+                Found_CVE.append(services[i])
+            else:
+                print("No CVE's found for ",services[i])
+        if len(Found_CVE)>0:
+            print("Found CVE's for: ",Found_CVE)
+    
+    if http_status=="True":
+        dirb=input("Would you like to run dirbuster on the HTTP site? [y/n]")
+        if dirb.lower()=="y":
+            dirbuster(ip)
+        
+
+def dirbuster(ip):
+            cmd="dirb https://"+ip+" -o dirbuster.txt"
+            os.system(cmd)
+
+
 #main
-banner()
-get_searchsploit_results()
+# banner()
+# get_searchsploit_results()
+nmap_scan("test")
