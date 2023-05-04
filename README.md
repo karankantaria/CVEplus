@@ -14,7 +14,14 @@ Furthermore, if there is a HTTP server running the script automatically prompts 
 #### yuh
 ![examples1](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture.PNG)
 
+![examples2](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture_2.PNG)
+
+![examples2](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture_3.PNG)
+
+![examples2](https://github.com/karankantaria/CVEplus/blob/main/img/Capture4.PNG)
 
 ![examples2](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture2.PNG)
 
 ![examples2](https://raw.githubusercontent.com/karankantaria/CVEplus/main/img/Capture3.PNG)
+
+![examples2](https://github.com/karankantaria/CVEplus/blob/main/img/Capture5.PNG)
