@@ -229,12 +229,14 @@ def get_searchsploit_results(service):
 
 
 def dirbuster(ip):
+    os.system("clear")
     path_to_wordlist = input("Enter path to wordlist: ")
     cmd = "gobuster dir -u https://"+ip+" --wordlist "+path_to_wordlist+" -t 100 -o gobuster_output.txt"
     os.system(cmd)
 
 
 def exploit(Found_CVE, http_status, ip):
+    os.system("clear")
     CVE_list = Found_CVE
     http_Status=http_status
     print(http_Status)
@@ -248,6 +250,7 @@ def exploit(Found_CVE, http_status, ip):
         if choice.lower() == "d":
             dirbuster(ip)
         else:
+            os.system("clear")
             get_searchsploit_results_detailed(CVE_list[int(choice)])
 
 
