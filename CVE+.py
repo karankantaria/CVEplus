@@ -253,5 +253,5 @@ def exploit(Found_CVE, http_status, ip):
 
 # main
 banner()
-get_ip=input("Enter IP: ")
+get_ip=input("Enter \033[91mIP\033[00m: ")
 nmap_scan(get_ip)
