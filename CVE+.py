@@ -154,8 +154,7 @@ def banner():
 
 def nmap_scan(ip):
     ip = str(ip)
-    cmd = "nmap -p 1-65535 -T4 -A -v -sV -oX nmap_output.xml " + \
-        ip+" 1>/dev/null 2>/dev/null"
+    cmd = "nmap -p 1-65535 -T4 -A -v -sV -oX nmap_output.xml " +ip+" 1>/dev/null 2>/dev/null"
     # stdout = Popen(cmd, shell=True, stdout=PIPE).stdout
     os.system(cmd)
     temp_open = open(str("nmap_output.xml"))
