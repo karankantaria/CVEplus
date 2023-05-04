@@ -1,6 +1,4 @@
-# import git
 import os
-# import re
 import json
 import requests
 from subprocess import Popen, PIPE
@@ -159,7 +157,8 @@ def nmap_scan(ip):
     cmd = "nmap -p 1-65535 -T4 -A -v -sV -oX nmap_output.xml " + \
         ip+" 1>/dev/null 2>/dev/null"
     # stdout = Popen(cmd, shell=True, stdout=PIPE).stdout
-    temp_open = open(str("Test_Fake_nmap.xml"))
+    os.system(cmd)
+    temp_open = open(str("nmap_output.xml"))
     xml_content = temp_open.read()
     temp_open.close()
     nmap_JSON = json.dumps(xmltodict.parse(
@@ -187,19 +186,16 @@ def nmap_scan(ip):
             else:
                 print("No CVE's found for ", services[i])
         if len(Found_CVE) > 0:
-            count = 0
+            os.system("clear")
             for i in range(len(Found_CVE)):
-                print("["+str(count)+"] Found CVE's for: ", Found_CVE[i])
-                count += 1
+                print("\033[91mFound\033[00m CVE's for: ", Found_CVE[i])
             loop = True
-            while loop:
-                exploit_menu = input("Would you like to exploit? [y/n]?")
+            while loop == True:
+                exploit_menu = input("Would you like to \033[91mexploit\033[00m? [y/n]?")
                 if exploit_menu.lower() == "y":
                     for i in range(len(services)):
                         if services[i] == "http":
                             http_status = True
-                        else:
-                            http_status = False
                     exploit(Found_CVE, http_status, ip)
                     loop = False
                 elif exploit_menu.lower() == "n":
@@ -233,7 +229,8 @@ def get_searchsploit_results(service):
 
 
 def dirbuster(ip):
-    cmd = "dirb https://"+ip+" -o dirbuster.txt"
+    path_to_wordlist = input("Enter path to wordlist: ")
+    cmd = "gobuster dir -u https://"+ip+" --wordlist "+path_to_wordlist+" -t 100 -o gobuster_output.txt"
     os.system(cmd)
 
 
@@ -242,19 +239,19 @@ def exploit(Found_CVE, http_status, ip):
     http_Status=http_status
     print(http_Status)
     count = 0
-    if http_Status == "True":
+    if http_Status == True:
         for i in range(len(CVE_list)):
             print("["+str(count)+"] "+CVE_list[i])
+            count += 1
         choice = input(
             "Enter which service you would like to exploit or enter d to run dirbuster on the http site: ")
-        if choice == "d":
+        if choice.lower() == "d":
             dirbuster(ip)
         else:
-            get_searchsploit_results_detailed(CVE_list[choice])
+            get_searchsploit_results_detailed(CVE_list[int(choice)])
 
 
 # main
-# banner()
-# get_searchsploit_results()
-os.getcwd()
-nmap_scan("test")
+banner()
+get_ip=input("Enter IP: ")
+nmap_scan(get_ip)
