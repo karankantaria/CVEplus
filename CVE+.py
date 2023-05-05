@@ -130,7 +130,7 @@ def get_searchsploit_results_detailed(service):
 
 
 def mirror(CVE_path):
-    os.sytem("clear")
+    os.system("clear")
     CVE_path = str(CVE_path)
     cmd = 'searchsploit -m '+CVE_path
     os.system(cmd)
